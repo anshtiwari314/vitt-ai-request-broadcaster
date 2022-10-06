@@ -18,22 +18,32 @@ let io = require('socket.io')(server,{
 
 let data = []
 
-io.on('connection',socket=>{
+// socket.on('connection',()=>{
+//     setInterval(()=>{
+//         if(data.length>0){
+//         io.emit('receive-data',data)
+//             data=[]
+//     }
+//     },1000)
+//     console.log(`connected with`,socket.id)
+// })
 
-    // setInterval(()=>{
-    //     if(data.length>0){
-    //     io.emit('receive-data',data)
-    //         data=[]
-    // }
-    // },1000)
-    console.log(`connected with`,socket.id)
+app.get('/receiveData',(req,res)=>{
+    console.log("runned")
+    if(data.length > 0){
+    res.json(data)
+    data = []
+    }
+    else
+    res.json(null)
+
 })
-
-app.post('/sendData',(req,res)=>{
+app.post('/',(req,res)=>{
     
-    io.emit('receive-data',req.body)
+  // io.emit('receive-data',req.body)
+    data.push(req.body)
     res.sendStatus(200)
 })
 
-server.listen(process.env.PORT,()=>console.log(`server is live ${process.env.PORT}`))
+server.listen(process.env.PORT || 5001,()=>console.log(`server is live ${process.env.PORT}`))
 
