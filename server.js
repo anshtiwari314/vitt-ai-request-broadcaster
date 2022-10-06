@@ -38,7 +38,7 @@ app.get('/receiveData',(req,res)=>{
     res.json(null)
 
 })
-app.post('/',(req,res)=>{
+app.post('/sendData',(req,res)=>{
     
   // io.emit('receive-data',req.body)
     data.push(req.body)
