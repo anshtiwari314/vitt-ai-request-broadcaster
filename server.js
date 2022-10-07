@@ -28,20 +28,20 @@ let data = []
 //     console.log(`connected with`,socket.id)
 // })
 
-app.get('/receiveData',(req,res)=>{
-    console.log("runned")
-    if(data.length > 0){
-    res.json(data)
-    data = []
-    }
-    else
-    res.json(null)
+// app.get('/receiveData',(req,res)=>{
+//     console.log("runned")
+//     if(data.length > 0){
+//     res.json(data)
+//     data = []
+//     }
+//     else
+//     res.json(null)
 
-})
+// })
 app.post('/sendData',(req,res)=>{
     
-  // io.emit('receive-data',req.body)
-    data.push(req.body)
+  io.emit('receive-data',req.body)
+  //  data.push(req.body)
     res.sendStatus(200)
 })
 
