@@ -2,7 +2,7 @@ const express = require('express');
 const app = express()
 const server = require('http').createServer(app)
 const cors = require('cors');
-
+let PORT = process.env.PORT || 5000
 
 app.use(cors({
     origin:'*'
@@ -45,5 +45,5 @@ app.post('/sendData',(req,res)=>{
     res.sendStatus(200)
 })
 
-server.listen(process.env.PORT || 5001,()=>console.log(`server is live ${process.env.PORT}`))
+server.listen(PORT ,()=>console.log(`server is live ${PORT}`))
 
