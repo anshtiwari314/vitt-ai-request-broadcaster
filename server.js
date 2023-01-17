@@ -39,7 +39,7 @@ let data = []
 
 // })
 app.post('/sendData',(req,res)=>{
-    
+   console.log(req.body);
   io.emit('receive-data',req.body)
   //  data.push(req.body)
     res.sendStatus(200)
