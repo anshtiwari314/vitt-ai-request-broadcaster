@@ -40,8 +40,9 @@ let data = []
 // })
 app.post('/sendData',(req,res)=>{
     //to check responses coming
-    let date = `${date.toTimeString(),date.toDateString()}`
-   console.log(date,req.body);
+    let date = new Date();
+    let dateString = `${date.toTimeString(),date.toDateString()}`
+   console.log(dateString,req.body);
   io.emit('receive-data',req.body)
   //  data.push(req.body)
     res.sendStatus(200)
