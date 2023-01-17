@@ -41,7 +41,7 @@ let data = []
 app.post('/sendData',(req,res)=>{
     //to check responses coming
     let date = new Date();
-    `
+    
    console.log(date.toTimeString(),date.toDateString(),req.body);
   io.emit('receive-data',req.body)
   //  data.push(req.body)
