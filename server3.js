@@ -2,7 +2,11 @@ const express = require('express');
 const app = express()
 const server = require('http').createServer(app)
 const cors = require('cors');
+const EventEmitter = require('events');
+
 let PORT = process.env.PORT || 5000
+
+let eventEmitter = new EventEmitter()
 
 app.use(cors({
     origin:'*'
@@ -17,14 +21,46 @@ let io = require('socket.io')(server,{
 })
 
 
+let data = []
+let users = {}
+
+eventEmitter.on('send-req-to-frontend',(data)=>{
+    console.log('send-req-to-frontend triggers')
+})
+
+io.on('connection',(socket)=>{
+    let roomId 
+    socket.on('connected',(roomId)=>{
+        roomId = roomId
+        console.log('someone connected',roomId)
+
+        socket.join(roomId)
+    })
+
+    // eventEmitter.on('send-req-to-frontend',(data)=>{
+    //     console.log('before broadcasting',roomId,data)
+    //     //broadcast to one room id
+    //     socket.broadcast.to(roomId).emit('receive-data', data);
+    // })
+    
+    
+    socket.on('disconnect',()=>{
+        console.log('disconnect user',userId,socket.id)
+        
+    })
+    console.log('new connection',socket.id)
+
+    
+    
+})
 
 // socket.on('connection',()=>{
-//     setInterval(()=>{
-//         if(data.length>0){
-//         io.emit('receive-data',data)
-//             data=[]
-//     }
-//     },1000)
+//     // setInterval(()=>{
+//     //     if(data.length>0){
+//     //     io.emit('receive-data',data)
+//     //         data=[]
+//     // }
+//     // },1000)
 //     console.log(`connected with`,socket.id)
 // })
 
@@ -39,13 +75,6 @@ let io = require('socket.io')(server,{
 
 // })
 
-let data = []
-let users = {}
-
-// app.post('/sendData',(req,res)=>{
-//     console.log('req',req.body)
-
-// })
 
 // io.on('connection',(socket)=>{
     
@@ -64,14 +93,18 @@ let users = {}
 //      })
 // })
 
+
 app.post('/sendData',(req,res)=>{
     //to check responses coming
-    let date = new Date();
+   let date = new Date();
     
+
    console.log(date.toTimeString(),date.toDateString(),req.body);
-  io.emit('receive-data',req.body)
-  //  data.push(req.body)
-    res.sendStatus(200)
+   io.to(users[data.toPeer]).emit('send-req-to-frontend',data)
+    //io.emit('receive-data',req.body)
+    //  data.push(req.body) 
+   res.sendStatus(200)
+
 })
 
 server.listen(PORT ,()=>console.log(`server is live ${PORT}`))
