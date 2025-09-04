@@ -37,7 +37,7 @@ io.on('connection',(socket)=>{
         console.log('someone connected with sessionid',sessionid,socket.id)
 
         socket.join(sessionid)
-        users[sessionid] = socket.id
+        //users[sessionid] = socket.id
     })
 
     // eventEmitter.on('send-req-to-frontend',(data)=>{
