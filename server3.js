@@ -4,7 +4,7 @@ const server = require('http').createServer(app)
 const cors = require('cors');
 const EventEmitter = require('events');
 
-let PORT = process.env.PORT || 5000
+let PORT = process.env.PORT || 5002
 
 let eventEmitter = new EventEmitter()
 
