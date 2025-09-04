@@ -6,7 +6,8 @@ let obj = {
    'color': '#7D11E9',
    'iconColor': 'blue',
    'content': contentArr,
-   'sessionid': 'anuj',
+   'userid':'iifl',
+   'sessionid': '3c9e3e48-3415-4ab5-bf60-3c46a13404f6',
    'similarity_query': 'Hello,<br/><br/>Welcome to the interview! I’m Recruito, your interviewer today. I’m excited to learn more about your skills and experiences.<br/><br/>Before we begin, I’d like to share a few guidelines to ensure the interview runs smoothly:<br/><br/>Please make sure you’re in a quiet and distraction-free environment for the best experience.<br/><br/>When answering a question, please provide your response in one go, without long pauses. If I notice a significant gap during your answer, I may assume you’ve finished and move on to the next question.<br/><br/>Feel free to take a deep breath and gather your thoughts before responding to each question. Let’s get started!',
    'type': 'cues',
    // 'audio_url': 'https://storage.googleapis.com/ai-recruiter-vitt/preformatted-audios/generic/welcome.mp3',
@@ -24,7 +25,7 @@ let obj = {
 }
 
 let serverUrl = 'https://vitt-ai-request-broadcaster-production.up.railway.app/sendData'
-let localServerUrl = 'http://localhost:5000'
+let localServerUrl = 'http://localhost:5000/sendData'
 
 fetch(localServerUrl, {
    method: 'POST',

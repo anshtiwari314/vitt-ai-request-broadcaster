@@ -29,12 +29,15 @@ eventEmitter.on('send-req-to-frontend',(data)=>{
 })
 
 io.on('connection',(socket)=>{
-    let roomId 
-    socket.on('connected',(roomId)=>{
-        roomId = roomId
-        console.log('someone connected',roomId)
+    let sessionid 
 
-        socket.join(roomId)
+    
+    socket.on('connected',(sessionid)=>{
+        
+        console.log('someone connected with sessionid',sessionid,socket.id)
+
+        socket.join(sessionid)
+        users[sessionid] = socket.id
     })
 
     // eventEmitter.on('send-req-to-frontend',(data)=>{
@@ -45,7 +48,7 @@ io.on('connection',(socket)=>{
     
     
     socket.on('disconnect',()=>{
-        console.log('disconnect user',userId,socket.id)
+        console.log('disconnect user',socket.id)
         
     })
     console.log('new connection',socket.id)
@@ -97,10 +100,11 @@ io.on('connection',(socket)=>{
 app.post('/sendData',(req,res)=>{
     //to check responses coming
    let date = new Date();
-    
+   
+   let data = req.body
 
-   console.log(date.toTimeString(),date.toDateString(),req.body);
-   io.to(users[data.toPeer]).emit('send-req-to-frontend',data)
+   console.log(date.toTimeString(),date.toDateString(),data.sessionid,users[data.sessionid]);
+   io.to(data.sessionid).emit('receive-data',data)
     //io.emit('receive-data',req.body)
     //  data.push(req.body) 
    res.sendStatus(200)
